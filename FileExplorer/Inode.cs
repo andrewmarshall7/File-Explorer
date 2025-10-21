@@ -11,4 +11,9 @@ public abstract class Inode
     {
         return Name;
     }
+
+    public void delete()
+    {
+        Name = null;
+    }
 }

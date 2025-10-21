@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 class FileExplorerMain
@@ -8,7 +9,7 @@ class FileExplorerMain
         Folder root = new Folder("desktop");
         Folder current = root;
         Stack<Folder> path = new Stack<Folder>();
-
+        var currentCopy = new File("example");
         Console.WriteLine("File Explorer");
 
         while (true)
@@ -20,6 +21,7 @@ class FileExplorerMain
             string[] parts = input.Split(' ', 2);
             string cmd = parts[0].ToLower();
             string arg = parts.Length > 1 ? parts[1] : "";
+
 
             switch (cmd)
             {
@@ -43,11 +45,30 @@ class FileExplorerMain
                     if (string.IsNullOrEmpty(arg))
                         Console.WriteLine("Usage: touch <filename>");
                     else
-                        current.AddFile(new MyFile(arg));
+                        current.AddFile(new File(arg));
                     break;
                 // case "code" make file then allow for text note to store as a string 
+                // cp copy files or dir
 
-                // case "delete" files and current folders in directory, warning if deleting a file, notify contents within will be deleted.
+                case "cp":
+                    if (string.IsNullOrEmpty(arg))
+                    {
+                        Console.WriteLine("Usage: cp <filename>");
+                        break;
+                    }
+                    else if (current.GetChild(arg) is File)
+                    {
+                        currentCopy = new File(arg);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"No such File {arg}");
+                    }
+                    break;
+
+                case "paste":
+                    current.AddFile(currentCopy);
+                    break;
 
                 case "cd":
                     if (string.IsNullOrEmpty(arg))
@@ -84,7 +105,39 @@ class FileExplorerMain
                 case "exit":
                     Console.WriteLine("Exiting explorer...");
                     return;
+                case "rmdir":
+                    if (string.IsNullOrEmpty(arg))
+                    {
+                        Console.WriteLine("Usage: rmdir <foldername>");
+                    }
 
+                    var targetDel = current.GetChild(arg);
+                    if (targetDel is Folder)
+                    {
+                        targetDel.delete();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"No such folder: {arg}");
+                    }
+                    break;
+
+                case "rm":
+                    if (string.IsNullOrEmpty(arg))
+                    {
+                        Console.WriteLine("Usage: rm <filename>");
+                    }
+
+                    var targetfileDel = current.GetChild(arg);
+                    if (targetfileDel is File)
+                    {
+                        targetfileDel.delete();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"No such file: {arg}");
+                    }
+                    break;
                 default:
                     Console.WriteLine($"Unknown command: {cmd}");
                     break;
@@ -100,6 +153,8 @@ Available commands:
   mkdir <name>     - Create a new folder
   touch <name>     - Create a new file
   cd <folder>      - Enter a folder
+  rm               - Delete a file
+  rmdir            - Delete a folder
   back             - Go up one level
   tree             - Display entire directory tree
   help             - Show this help message

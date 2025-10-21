@@ -12,3 +12,4 @@ C:\Users\a5marsha\OneDrive - Frasers Group\Desktop\Training\File_Explorer_progra
 C:\Users\a5marsha\OneDrive - Frasers Group\Desktop\Training\File_Explorer_program\FileExplorer\obj\Debug\net9.0\FileExplorer.pdb
 C:\Users\a5marsha\OneDrive - Frasers Group\Desktop\Training\File_Explorer_program\FileExplorer\obj\Debug\net9.0\FileExplorer.genruntimeconfig.cache
 C:\Users\a5marsha\OneDrive - Frasers Group\Desktop\Training\File_Explorer_program\FileExplorer\obj\Debug\net9.0\ref\FileExplorer.dll
+C:\Users\a5marsha\OneDrive - Frasers Group\Desktop\Training\File_Explorer_program\FileExplorer\obj\Debug\net9.0\FileExplorer.sourcelink.json

@@ -1,6 +1,8 @@
-public class MyFile : Inode
+public class File : Inode
 {
-    public MyFile(string name) : base(name)
+    public File(string name) : base(name)
     {
     }
+
+    // add string contents
 }
